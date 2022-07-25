@@ -392,6 +392,8 @@ class execution(_Config):
     """Filter input dataset by session identifier."""
     task_id = None
     """Select a particular task from all available in the dataset."""
+    acq_id = None
+    """Filter input dataset by acquisition identifier."""
     templateflow_home = _templateflow_home
     """The root folder of the TemplateFlow client."""
     upload_strict = False

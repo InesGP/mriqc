@@ -36,6 +36,7 @@ def collect_bids_data(
     session=None,
     run=None,
     task=None,
+    acquisition=None,
     bids_type=None,
 ):
     """Get files in dataset"""
@@ -48,6 +49,7 @@ def collect_bids_data(
         "subject": participant_label,
         "session": session,
         "task": task,
+        "acquisition": acquisition,
         "run": run,
         "datatype": "func",
         "return_type": "file",

@@ -179,6 +179,13 @@ Automated Quality Control and visual reports for Quality Assesment of structural
         help="Filter input dataset by task ID.",
     )
     g_bids.add_argument(
+        "--acq-id",
+        action="store",
+        nargs="*",
+        type=str,
+        help="Filter input dataset by acquisition type.",
+    )
+    g_bids.add_argument(
         "-m",
         "--modalities",
         action="store",
@@ -520,6 +527,7 @@ def parse_args(args=None, namespace=None):
         "session": config.execution.session_id,
         "run": config.execution.run_id,
         "task": config.execution.task_id,
+        "acquisition": config.execution.acq_id,
         "bids_type": config.execution.modalities,
     }
     config.workflow.inputs = {

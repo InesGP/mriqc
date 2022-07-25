@@ -1,0 +1,52 @@
+Node: mriqc_wf.anatMRIQC.synthstrip_wf.pre_clip
+Working directory: /tmp/work/mriqc_wf/anatMRIQC/synthstrip_wf/_in_file_..data..sub-01..ses-01..anat..sub-PD01577D642390_ses-01_acq-NM_run-1_T1w.nii.gz/pre_clip
+
+Node inputs:
+
+dtype = int16
+in_file = <undefined>
+invert = False
+nonnegative = True
+p_max = 99.9
+p_min = 10.0
+
+Traceback (most recent call last):
+  File "/opt/conda/lib/python3.8/site-packages/mriqc/engine/plugin.py", line 60, in run_node
+    result["result"] = node.run(updatehash=updatehash)
+  File "/opt/conda/lib/python3.8/site-packages/nipype/pipeline/engine/nodes.py", line 524, in run
+    result = self._run_interface(execute=True)
+  File "/opt/conda/lib/python3.8/site-packages/nipype/pipeline/engine/nodes.py", line 642, in _run_interface
+    return self._run_command(execute)
+  File "/opt/conda/lib/python3.8/site-packages/nipype/pipeline/engine/nodes.py", line 750, in _run_command
+    raise NodeExecutionError(
+nipype.pipeline.engine.nodes.NodeExecutionError: Exception raised while executing Node pre_clip.
+
+Traceback (most recent call last):
+  File "/opt/conda/lib/python3.8/site-packages/nipype/interfaces/base/core.py", line 398, in run
+    runtime = self._run_interface(runtime)
+  File "/opt/conda/lib/python3.8/site-packages/niworkflows/interfaces/nibabel.py", line 454, in _run_interface
+    self._results["out_file"] = _advanced_clip(
+  File "/opt/conda/lib/python3.8/site-packages/niworkflows/interfaces/nibabel.py", line 606, in _advanced_clip
+    from skimage.morphology import ball
+  File "/opt/conda/lib/python3.8/site-packages/skimage/morphology/__init__.py", line 8, in <module>
+    from ..measure._label import label
+  File "/opt/conda/lib/python3.8/site-packages/skimage/measure/__init__.py", line 6, in <module>
+    from ._polygon import approximate_polygon, subdivide_polygon
+  File "/opt/conda/lib/python3.8/site-packages/skimage/measure/_polygon.py", line 2, in <module>
+    from scipy import signal
+  File "/opt/conda/lib/python3.8/site-packages/scipy/signal/__init__.py", line 309, in <module>
+    from . import _sigtools, windows
+  File "/opt/conda/lib/python3.8/site-packages/scipy/signal/windows/__init__.py", line 41, in <module>
+    from ._windows import *
+  File "/opt/conda/lib/python3.8/site-packages/scipy/signal/windows/_windows.py", line 7, in <module>
+    from scipy import linalg, special, fft as sp_fft
+  File "/opt/conda/lib/python3.8/site-packages/scipy/fft/__init__.py", line 91, in <module>
+    from ._helper import next_fast_len
+  File "/opt/conda/lib/python3.8/site-packages/scipy/fft/_helper.py", line 3, in <module>
+    from ._pocketfft import helper as _helper
+  File "/opt/conda/lib/python3.8/site-packages/scipy/fft/_pocketfft/__init__.py", line 3, in <module>
+    from .basic import *
+  File "/opt/conda/lib/python3.8/site-packages/scipy/fft/_pocketfft/basic.py", line 6, in <module>
+    from . import pypocketfft as pfft
+ImportError: /opt/conda/lib/python3.8/site-packages/scipy/linalg/../../../../libstdc++.so.6: version `GLIBCXX_3.4.30' not found (required by /opt/conda/lib/python3.8/site-packages/scipy/fft/_pocketfft/pypocketfft.cpython-38-x86_64-linux-gnu.so)
+

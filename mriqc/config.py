@@ -461,6 +461,9 @@ class execution(_Config):
                         r"sub-[a-zA-Z0-9]+(/ses-[a-zA-Z0-9]+)?/func/.*"
                         r"_(cbv|sbref|phase|events|physio|stim)\."
                     ),
+                    re.compile(
+                        r"sub-[a-zA-Z0-9]+(/ses-[a-zA-Z0-9]+)?/anat/sub-[a-zA-Z0-9]+(_ses-[a-zA-Z0-9]+)_acq-[a-zA-Z0-9]+_run-[a-zA-Z0-9]_."
+                    ),                
                 ),
             )
             cls._layout = BIDSLayout(

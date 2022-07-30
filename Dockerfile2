@@ -53,11 +53,14 @@ RUN echo "Downloading AFNI ..." \
     && mkdir -p ${AFNI_DIR} \
     && curl -fsSL --retry 5 https://afni.nimh.nih.gov/pub/dist/tgz/linux_openmp_64.tgz \
     | tar -xz -C ${AFNI_DIR} --strip-components 1
-ENV PATH="${AFNI_DIR}:$PATH" \
-    AFNI_IMSAVE_WARNINGS="NO" \
-    AFNI_MODELPATH="${AFNI_DIR}/models" \
-    AFNI_TTATLAS_DATASET="${AFNI_DIR}/atlases" \
-    AFNI_PLUGINPATH="${AFNI_DIR}/plugins"
+
+ENV PATH=/opt/afni:/opt/conda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin AFNI_IMSAVE_WARNINGS=NO AFNI_MODELPATH=/opt/afni/models AFNI_TTATLAS_DATASET=/opt/afni/atlases AFNI_PLUGINPATH=/opt/afni/plugins
+
+#ENV PATH="${AFNI_DIR}:$PATH" \
+#    AFNI_IMSAVE_WARNINGS="NO" \
+#    AFNI_MODELPATH="${AFNI_DIR}/models" \
+#    AFNI_TTATLAS_DATASET="${AFNI_DIR}/atlases" \
+#    AFNI_PLUGINPATH="${AFNI_DIR}/plugins"
     
 # Install AFNI's dependencies
 RUN ${CONDA_PATH}/bin/conda install -c conda-forge -c anaconda \
@@ -97,8 +100,8 @@ ENV ANTSPATH="/opt/ants"
 WORKDIR $ANTSPATH
 RUN curl -sSL "https://dl.dropbox.com/s/gwf51ykkk5bifyj/ants-Linux-centos6_x86_64-v2.3.4.tar.gz" \
     | tar -xzC $ANTSPATH --strip-components 1
-ENV PATH="$ANTSPATH:$PATH"
-#ENV PATH=/opt/ants:/opt/afni:/opt/conda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+#ENV PATH="$ANTSPATH:$PATH"
+ENV PATH=/opt/ants:/opt/afni:/opt/conda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 # Install FSL 5.0.11
 RUN curl -sSL https://fsl.fmrib.ox.ac.uk/fsldownloads/fsl-5.0.11-centos7_64.tar.gz | tar zxv --no-same-owner -C /opt \
@@ -157,7 +160,7 @@ RUN python -c "from templateflow import api as tfapi; \
                tfapi.get('MNI152NLin2009cAsym', resolution=[1, 2], suffix='boldref')"
 # Installing MRIQC
 COPY . /src/mriqc
-ARG VERSION
+ARG VERSION=22.0.1
 
 # Force static versioning within container
 RUN echo "${VERSION}" > /src/mriqc/mriqc/VERSION && \
@@ -172,16 +175,18 @@ RUN ldconfig
 
 WORKDIR /tmp/
 
-# Run mriqc by default
-ENTRYPOINT ["/opt/conda/bin/mriqc"]
 ARG BUILD_DATE
 ARG VCS_REF
 LABEL org.label-schema.build-date=$BUILD_DATE \
       org.label-schema.name="MRIQC" \
       org.label-schema.description="MRIQC - Automated Quality Control and visual reports for Quality Assessment of structural (T1w, T2w) and functional MRI of the brain" \
       org.label-schema.url="http://mriqc.readthedocs.io" \
-      org.label-schema.vcs-ref=$VCS_REF \
+      org.label-schema.vcs-ref=e021008 \
       org.label-schema.vcs-url="https://github.com/nipreps/mriqc" \
-      org.label-schema.version=$VERSION \
+      org.label-schema.version=22.0.1 \
       org.label-schema.schema-version="1.0"
-
+      
+# Run mriqc by default
+#ENTRYPOINT ["/opt/conda/bin/mriqc"]
+#ENTRYPOINT [ "/bin/bash", "-lc"]
+CMD ["/opt/conda/bin/mriqc"]
